@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>AstroApp</title>
+        </f:facet>
+    </h:head>
+
+    <h:body>
+        <f:view>
+            <p:layout style="width:760px;height:800px; margin: auto" id="layout" >
+                <p:layoutUnit position="north" size="110" style="text-align:center" >
+                    <p:graphicImage id="tab1Img" value="/images/banner_logo.jpg" />  
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" effect="true">
+                    <h:form id="form">  
+                        <p:menubar> 
+                            <p:menuitem value="Inicio" url="https://astro-app.appspot.com" icon="ui-icon-extlink" />
+                            <p:submenu label="Project" icon="ui-icon-check">  
+                                <p:submenu label="Quienes somos" icon="ui-icon-check">  
+                                    <p:menuitem value="Project" url="#" />  
+                                    <p:menuitem value="Other" url="#" />  
+                                </p:submenu>  
+                                <p:menuitem value="Open" url="#" />  
+                                <p:separator />  
+                                <p:menuitem value="Quit" url="#" />  
+                            </p:submenu>  
+
+                            <p:submenu label="Esperimentos" icon="ui-icon-check">  
+                                <p:menuitem value="Clasificador" url="#" icon="ui-icon-check" />  
+                                <p:menuitem value="Experimento nuevo" url="#" icon="ui-icon-check" />  
+                            </p:submenu>    
+                        </p:menubar>  
+
+
+                        <p:panel id="panel_descripcion" header="#{exp2Bean.titulo}">
+                            <h:outputText value="#{exp2Bean.descripcion}"></h:outputText>
+                        </p:panel>
+
+
+                        <p:panel header="Selecciona el area del imagen donde se encuentra el objeto">
+
+                            <p:outputPanel id="panel_recorte">
+                                <h:panelGrid columns="2">
+                                    <p:imageCropper id="image_crop" value="#{exp2Bean.croppedImage}"
+                                                    image="#{exp2Bean.image}" initialCoords="0,0,100,100"/>
+                                    <p:graphicImage id="image_croped" value="/images/exp2/#{exp2Bean.newImageName}.jpg" cache="false"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:panel>
+
+
+                        <p:spacer width="250" height="10" />
+
+                        <p:commandButton value="Realizar Selección"  
+                                         action="#{exp2Bean.crop}"  
+                                         update="image_croped"/>
+                        <p:commandButton value="Enviar resultados" onclick="dlg.show();"/>
+
+
+
+                        <p:dialog id="dialog" style="width:400px;height:400px; margin: auto" header=" " widgetVar="dlg" resizable="false">  
+
+                            <p:panelGrid columns="1">
+                                <p:panel style="width: 400px; height: 200px">
+                                    <h:outputText value="Gracias por participar en este proyecto" />
+                                </p:panel>
+                                <f:facet name="footer">
+                                    <p:commandButton value=" Finalizar " oncomplete="dlg.hide();" action="inicio"/>
+                                    <p:commandButton actionListener="#{exp2Bean.nuevoExp}" 
+                                                     update="panel_recorte" 
+                                                     value=" Nuevo experimento " oncomplete="dlg.hide();"/>
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:dialog>
+
+                    </h:form> 
+                </p:layoutUnit>
+            </p:layout>
+        </f:view>
+    </h:body>
+
+
+</html>
+
